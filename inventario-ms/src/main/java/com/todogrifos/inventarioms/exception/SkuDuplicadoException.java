@@ -1,0 +1,7 @@
+package com.todogrifos.inventarioms.exception;
+
+public class SkuDuplicadoException extends RuntimeException {
+    public SkuDuplicadoException(String message) {
+        super(message);
+    }
+}

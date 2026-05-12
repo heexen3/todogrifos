@@ -1,13 +1,13 @@
-package com.luisechevarria.todogrifos;
+package com.todogrifos.inventarioms;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class TodogrifosApplication {
+public class InventarioMsApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(TodogrifosApplication.class, args);
+		SpringApplication.run(InventarioMsApplication.class, args);
 	}
 
 }

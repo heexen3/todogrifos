@@ -17,6 +17,7 @@
 		<module>eureka-server</module>
 		<module>api-gateway</module>
 		<module>productos-ms</module>
+		<module>inventario-ms</module>
 	</modules>
 
 	<properties>

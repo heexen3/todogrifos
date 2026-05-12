@@ -1,10 +1,10 @@
-package com.luisechevarria.todogrifos;
+package com.todogrifos.inventarioms;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class TodogrifosApplicationTests {
+class InventarioMsApplicationTests {
 
 	@Test
 	void contextLoads() {

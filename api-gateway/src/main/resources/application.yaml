@@ -5,7 +5,7 @@ spring:
   application:
     name: api-gateway
   main:
-    web-application-type: reactive  # Fuerza el modo reactivo para evitar conflictos con MVC
+    web-application-type: reactive
 
   cloud:
     gateway:
@@ -19,6 +19,10 @@ spring:
               uri: lb://PRODUCTOS-MS
               predicates:
                 - Path=/api/productos/**
+            - id: inventario-ms-route
+              uri: lb://INVENTARIO-MS
+              predicates:
+                - Path=/api/inventario/**
 
 eureka:
   client:
