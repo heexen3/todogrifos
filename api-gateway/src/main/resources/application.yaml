@@ -1,0 +1,33 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+  main:
+    web-application-type: reactive  # Fuerza el modo reactivo para evitar conflictos con MVC
+
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      server:
+        webflux:
+          routes:
+            - id: productos-ms-route
+              uri: lb://PRODUCTOS-MS
+              predicates:
+                - Path=/api/productos/**
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+    fetch-registry: true
+    register-with-eureka: true
+
+# Opcional: Para silenciar advertencias de versiones en desarrollo
+logging:
+  level:
+    org.springframework.cloud.gateway: INFO
