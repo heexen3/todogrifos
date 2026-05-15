@@ -23,6 +23,11 @@ spring:
               uri: lb://INVENTARIO-MS
               predicates:
                 - Path=/api/inventario/**
+            - id: auth-ms-route
+              uri: lb://AUTH-MS
+              predicates:
+                - Path=/api/auth/**
+
 
 eureka:
   client:
