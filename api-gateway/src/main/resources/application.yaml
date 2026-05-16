@@ -27,7 +27,14 @@ spring:
               uri: lb://AUTH-MS
               predicates:
                 - Path=/api/auth/**
-
+            - id: clientes-ms
+              uri: lb://clientes-ms
+              predicates:
+                - Path=/api/clientes/**
+            - id: ventas-ms
+              uri: lb://ventas-ms
+              predicates:
+                - Path=/api/ventas/**
 
 eureka:
   client:
@@ -36,7 +43,7 @@ eureka:
     fetch-registry: true
     register-with-eureka: true
 
-# Opcional: Para silenciar advertencias de versiones en desarrollo
+# opcional: es para silenciar advertencias de versiones en desarrollo
 logging:
   level:
     org.springframework.cloud.gateway: INFO

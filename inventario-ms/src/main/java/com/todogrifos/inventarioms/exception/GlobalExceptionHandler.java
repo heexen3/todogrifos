@@ -1,5 +1,7 @@
 package com.todogrifos.inventarioms.exception;
 
+import feign.FeignException;
+import feign.RetryableException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -61,5 +63,35 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> manejarCantidadInvalida(InvalidStockQuantityException ex) {
         log.warn("Cantidad de stock incongruente: {}", ex.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(FeignException.NotFound.class)
+    public ResponseEntity<Map<String, Object>> handleFeignNotFoundException(FeignException.NotFound ex) {
+        Map<String, Object> response = new HashMap<>();
+        response.put("error", "Producto no encontrado en el catálogo maestro remoto.");
+        response.put("status", HttpStatus.NOT_FOUND.value());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+    }
+
+    @ExceptionHandler(RetryableException.class)
+    public ResponseEntity<Map<String, Object>> handleFeignRetryableException(RetryableException ex) {
+        Map<String, Object> response = new HashMap<>();
+        response.put("error", "El servicio de catálogo de productos no se encuentra disponible temporalmente. Intente más tarde.");
+        response.put("status", HttpStatus.SERVICE_UNAVAILABLE.value());
+
+        return ResponseEntity
+                .status(HttpStatus.SERVICE_UNAVAILABLE) // Código HTTP 503
+                .body(response);
+    }
+
+    @ExceptionHandler(FeignException.ServiceUnavailable.class)
+    public ResponseEntity<Map<String, Object>> handleFeignServiceUnavailable(FeignException.ServiceUnavailable ex) {
+        Map<String, Object> response = new HashMap<>();
+        response.put("error", "El servicio de catálogo de productos no está disponible en este momento. Intente más tarde.");
+        response.put("status", HttpStatus.SERVICE_UNAVAILABLE.value());
+
+        return ResponseEntity
+                .status(HttpStatus.SERVICE_UNAVAILABLE) // Código HTTP 503
+                .body(response);
     }
 }

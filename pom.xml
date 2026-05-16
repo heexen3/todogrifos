@@ -19,6 +19,8 @@
 		<module>productos-ms</module>
 		<module>inventario-ms</module>
 		<module>auth-ms</module>
+		<module>clientes-ms</module>
+		<module>ventas-ms</module>
 	</modules>
 
 	<properties>
