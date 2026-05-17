@@ -11,10 +11,9 @@
 	</parent>
 
 	<groupId>com.todogrifos</groupId>
-	<artifactId>despachos-ms</artifactId>
+	<artifactId>devoluciones-ms</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>despachos-ms</name>
-	<description>Microservicio de Logística y Despacho a Domicilio para TodoGrifos</description>
+	<name>devoluciones-ms</name>
 
 	<dependencies>
 		<dependency>
@@ -40,6 +39,10 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-openfeign</artifactId>
+		</dependency>
 
 		<dependency>
 			<groupId>org.projectlombok</groupId>
@@ -52,24 +55,4 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>org.springframework.cloud</groupId>
-				<artifactId>spring-cloud-dependencies</artifactId>
-				<version>${spring-cloud.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
-
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-		</plugins>
-	</build>
 </project>

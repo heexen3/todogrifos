@@ -35,6 +35,22 @@ spring:
               uri: lb://ventas-ms
               predicates:
                 - Path=/api/ventas/**
+            - id: proveedores-ms
+              uri: lb://proveedores-ms
+              predicates:
+                - Path=/api/proveedores/**
+            - id: despachos-ms
+              uri: lb://despachos-ms
+              predicates:
+                - Path=/api/despachos/**
+            - id: vendedores-ms
+              uri: lb://vendedores-ms
+              predicates:
+                - Path=/api/vendedores/**
+            - id: devoluciones-ms
+              uri: lb://devoluciones-ms
+              predicates:
+                - Path=/api/devoluciones/**
 
 eureka:
   client:

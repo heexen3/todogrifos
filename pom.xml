@@ -21,6 +21,11 @@
 		<module>auth-ms</module>
 		<module>clientes-ms</module>
 		<module>ventas-ms</module>
+		<module>compras-ms</module>
+		<module>proveedores-ms</module>
+		<module>despachos-ms</module>
+		<module>vendedores-ms</module>
+		<module>devoluciones-ms</module>
 	</modules>
 
 	<properties>
