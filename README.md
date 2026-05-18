@@ -1,4 +1,4 @@
-# 🚰 TodoGrifos - Arquitectura de Microservicios
+# TodoGrifos - Arquitectura de Microservicios
 
 ![Java](https://img.shields.io/badge/Java-21-orange.svg)
 ![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.x-brightgreen.svg)
@@ -8,15 +8,15 @@
 
 **TodoGrifos** es un sistema integral de gestión enfocado en el sector retail (ferretería/grifería), diseñado bajo una arquitectura de **Microservicios** altamente escalable, resiliente y segura.
 
-## 🏗️ Arquitectura del Sistema
+## Arquitectura del Sistema
 
 El ecosistema está compuesto por **12 componentes principales**: 2 de infraestructura core y 10 microservicios de negocio independientes.
 
-### 🛡️ Infraestructura Core
+### Infraestructura Core
 * **`eureka-server` (8761):** Servidor de descubrimiento (Service Registry). Mantiene el registro dinámico de todos los nodos activos.
 * **`api-gateway` (8080):** Enrutador centralizado (Spring Cloud Gateway) construido sobre WebFlux. Implementa un `AuthenticationFilter` reactivo que actúa como escudo de seguridad perimetral validando tokens JWT.
 
-### 💼 Microservicios de Negocio
+### Microservicios de Negocio
 Cada microservicio posee su propia capa de persistencia (Base de Datos aislada), validaciones (JSR-380) y manejo centralizado de excepciones (`GlobalExceptionHandler`). La comunicación síncrona entre dominios se realiza mediante **OpenFeign**.
 
 1. **`auth-ms` (8082):** Gestión de identidades (Login/Registro), encriptación y firma de tokens JWT.
