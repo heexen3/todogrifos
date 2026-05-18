@@ -7,7 +7,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-@EnableFeignClients // Habilita la intercomunicación con ventas-ms e inventario-ms
+@EnableFeignClients
 public class DevolucionesMsApplication {
 
 	public static void main(String[] args) {

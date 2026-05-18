@@ -26,7 +26,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Object> handleGeneral(Exception ex) {
-        // En producción no se recomienda mostrar ex.getMessage() completo por seguridad
+        ex.printStackTrace();
         return buildResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Error interno del servidor", "Ha ocurrido un error inesperado");
     }
     

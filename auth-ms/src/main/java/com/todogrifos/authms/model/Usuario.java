@@ -24,11 +24,30 @@ public class Usuario implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role));
+        // Si el rol es nulo, Spring arrojará NullPointerException o IllegalArgumentException al crear el token
+        if (this.role == null || this.role.trim().isEmpty()) {
+            return List.of(new SimpleGrantedAuthority("USER"));
+        }
+        return List.of(new SimpleGrantedAuthority(this.role));
     }
 
-    @Override public boolean isAccountNonExpired() { return true; }
-    @Override public boolean isAccountNonLocked() { return true; }
-    @Override public boolean isCredentialsNonExpired() { return true; }
-    @Override public boolean isEnabled() { return true; }
+    @Override
+    public boolean isAccountNonExpired() {
+        return true; // Debe ser true, de lo contrario lanza AccountExpiredException (Error 500)
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true; // Debe ser true, de lo contrario lanza LockedException (Error 500)
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true; // Debe ser true
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true; // Debe ser true, de lo contrario lanza DisabledException (Error 500)
+    }
 }

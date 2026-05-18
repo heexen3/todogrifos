@@ -7,7 +7,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-@EnableFeignClients // Requisito Rúbrica: Activa el escaneo para intercomunicación remota
+@EnableFeignClients
 public class ComprasMsApplication {
 
 	public static void main(String[] args) {

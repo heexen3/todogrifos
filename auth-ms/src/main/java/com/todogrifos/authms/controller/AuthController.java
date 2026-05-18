@@ -35,10 +35,10 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody Usuario usuario) {
-        // Encriptar password antes de guardar (Requisito de seguridad)
         usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
-
-        // Guardar en la base de datos db_authms
+        if (usuario.getRole() == null || usuario.getRole().isEmpty()) {
+            usuario.setRole("USER"); // O "ROLE_USER" dependiendo de tu convención
+        }
         Usuario nuevoUsuario = usuarioRepository.save(usuario);
 
         return ResponseEntity.ok("Usuario registrado exitosamente con ID: " + nuevoUsuario.getId());
