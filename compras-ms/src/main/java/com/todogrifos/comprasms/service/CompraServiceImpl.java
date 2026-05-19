@@ -1,4 +1,4 @@
-package com.todogrifos.comprasms.service.impl;
+package com.todogrifos.comprasms.service;
 
 import com.todogrifos.comprasms.client.InventarioClient;
 import com.todogrifos.comprasms.dto.CompraCreateDTO;
