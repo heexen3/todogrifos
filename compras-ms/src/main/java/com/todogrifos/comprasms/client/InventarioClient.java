@@ -16,7 +16,7 @@ public interface InventarioClient {
      * En el RequestBody le pasamos la cantidad comprada que se va a sumar al stock actual.
      */
     @PutMapping("/{sku}/ingresar")
-    ResponseEntity<Map<String, Object>> ingresarStock(
+    ResponseEntity<Map<String, Object>> agregarStock(
             @PathVariable("sku") String sku,
             @RequestBody Map<String, Object> stockUpdateDto
     );

@@ -38,7 +38,7 @@ public class InventarioController {
     }
 
     // Usamos PATCH para actualizaciones parciales (sumar stock)
-    @PatchMapping("/{sku}/agregar")
+    @PutMapping("/{sku}/agregar")
     public ResponseEntity<InventarioResponseDTO> agregarStock(
             @PathVariable String sku,
             @Valid @RequestBody StockUpdateDTO dto) {
@@ -46,7 +46,7 @@ public class InventarioController {
         return ResponseEntity.ok(service.agregarStock(sku, dto));
     }
 
-    @PatchMapping("/{sku}/retirar")
+    @PutMapping("/{sku}/retirar")
     public ResponseEntity<InventarioResponseDTO> retirarStock(
             @PathVariable String sku,
             @Valid @RequestBody StockUpdateDTO dto) {

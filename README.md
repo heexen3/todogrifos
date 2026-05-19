@@ -1,66 +1,301 @@
-# TodoGrifos - Arquitectura de Microservicios
+# TodoGrifos — Arquitectura de Microservicios
 
-![Java](https://img.shields.io/badge/Java-21-orange.svg)
-![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.x-brightgreen.svg)
-![Spring Cloud](https://img.shields.io/badge/Spring_Cloud-Eureka_|_Gateway-blue.svg)
-![MySQL](https://img.shields.io/badge/MySQL-8.0-blue.svg)
-![Security](https://img.shields.io/badge/Security-JWT-yellow.svg)
+**Video explicativo:**
+https://www.youtube.com/watch?v=7FGUdbPyFSM
 
-**TodoGrifos** es un sistema integral de gestión enfocado en el sector retail (ferretería/grifería), diseñado bajo una arquitectura de **Microservicios** altamente escalable, resiliente y segura.
+Backend para la gestión integral de una tienda de **grifería y ferretería**.
 
-## Arquitectura del Sistema
+El sistema cubre:
 
-El ecosistema está compuesto por **12 componentes principales**: 2 de infraestructura core y 10 microservicios de negocio independientes.
+- Catálogo de productos
+- Clientes
+- Ventas
+- Compras
+- Inventario
+- Proveedores
+- Vendedores
+- Despachos
+- Devoluciones
+- Autenticación y autorización
 
-### Infraestructura Core
-* **`eureka-server` (8761):** Servidor de descubrimiento (Service Registry). Mantiene el registro dinámico de todos los nodos activos.
-* **`api-gateway` (8080):** Enrutador centralizado (Spring Cloud Gateway) construido sobre WebFlux. Implementa un `AuthenticationFilter` reactivo que actúa como escudo de seguridad perimetral validando tokens JWT.
+---
 
-### Microservicios de Negocio
-Cada microservicio posee su propia capa de persistencia (Base de Datos aislada), validaciones (JSR-380) y manejo centralizado de excepciones (`GlobalExceptionHandler`). La comunicación síncrona entre dominios se realiza mediante **OpenFeign**.
+## Integrante
 
-1. **`auth-ms` (8082):** Gestión de identidades (Login/Registro), encriptación y firma de tokens JWT.
-2. **`productos-ms`:** Catálogo central (SKU, categorías, marcas).
-3. **`clientes-ms`:** Gestión del perfil de compradores.
-4. **`proveedores-ms`:** Administración de entidades abastecedoras.
-5. **`vendedores-ms`:** Personal de atención y comisiones.
-6. **`inventario-ms`:** Control estricto de existencias físicas.
-7. **`ventas-ms`:** Procesamiento transaccional de boletas y facturas.
-8. **`compras-ms`:** Gestión de órdenes de compra institucionales.
-9. **`despachos-ms`:** Logística de envíos y seguimiento.
-10. **`devoluciones-ms`:** Flujo inverso logístico (Notas de Crédito y reingresos a stock).
+- **Luis Echevarria**
+- **Claudio Bertin**
 
-## Tecnologías y Herramientas
+---
 
-* **Backend:** Java 21, Spring Boot (Data JPA, Web, Security, WebFlux)
-* **Cloud:** Spring Cloud Netflix Eureka, Spring Cloud Gateway, OpenFeign
-* **Seguridad:** JSON Web Tokens (JWT)
-* **Base de Datos:** MySQL Connector
-* **Validaciones:** JSR-380 (Hibernate Validator), Lombok
+## Tecnologías
 
-## Configuración y Ejecución Local
+### Backend
 
-### Orden de Despliegue Estricto
-Para asegurar que el Service Registry y el API Gateway reconozcan todos los nodos sin errores, levanta los servicios en este orden:
+- Java 21
+- Spring Boot 3
+- Spring Cloud Netflix Eureka
+- Spring Cloud Gateway
+- OpenFeign
 
-1. Iniciar **`eureka-server`** (Puerto `8761`).
-2. Iniciar **`api-gateway`** (Puerto `8080`).
-3. Iniciar **`auth-ms`** (Puerto `8082`).
-4. Iniciar los **9 microservicios restantes** (El orden entre ellos no importa).
+### Persistencia
 
-## Seguridad y Flujo de Peticiones
+- Spring Data JPA
+- Hibernate
+- MySQL
 
-* **Endpoints Públicos:** `/api/auth/register` y `/api/auth/login`.
-* **Endpoints Protegidos:** El Gateway intercepta la petición, verifica el header `Authorization: Bearer <token>` comprobando su firma y expiración, inyecta la cabecera `X-Auth-User` y delega la petición a los microservicios de negocio.
+### Seguridad
 
-## Ejemplos de Consumo (Postman)
+- Spring Security
+- JWT (JSON Web Tokens)
 
-**1. Obtener Token (Público)**
+### Utilidades
+
+- Bean Validation
+- Lombok
+
+---
+
+# Arquitectura
+
+El proyecto sigue una arquitectura basada en **microservicios**, compuesta por:
+
+- **2 componentes de infraestructura**
+- **10 microservicios de negocio**
+- **Database per Service Pattern**
+
+## Componentes
+
+| Componente | Puerto | Tipo | Responsabilidad |
+|-------------|--------:|------|------------------|
+| `eureka-server` | 8761 | Infraestructura | Registro y descubrimiento de servicios |
+| `api-gateway` | 8080 | Infraestructura | Entrada única, routing y validación JWT |
+| `auth-ms` | 8082 | Negocio | Registro, login y emisión de tokens |
+| `productos-ms` | 8081 | Negocio | Catálogo de productos, marcas y categorías |
+| `clientes-ms` | 8083 | Negocio | CRUD de clientes |
+| `ventas-ms` | 8084 | Negocio | Registro de ventas y descuento de stock |
+| `compras-ms` | 8085 | Negocio | Registro de compras y aumento de stock |
+| `proveedores-ms` | 8086 | Negocio | CRUD de proveedores |
+| `despachos-ms` | 8087 | Negocio | Órdenes de despacho y tracking |
+| `vendedores-ms` | 8088 | Negocio | CRUD de vendedores y comisiones |
+| `inventario-ms` | 8089 | Negocio | Control de stock por SKU |
+| `devoluciones-ms` | 8091 | Negocio | Notas de crédito y reingreso/merma |
+
+---
+
+## Organización interna de cada microservicio
+
+Cada servicio mantiene su propia base de datos y sigue una estructura similar:
+
+```plaintext
+controller/
+service/
+repository/
+model/
+dto/
+exception/
+client/
+```
+
+---
+
+# Persistencia
+
+La persistencia se implementa con **JPA/Hibernate**.
+
+Cada servicio utiliza:
+
+```properties
+spring.jpa.hibernate.ddl-auto=update
+```
+
+Hibernate genera o actualiza automáticamente el esquema usando anotaciones como:
+
+- `@Entity`
+- `@Table`
+- `@Id`
+- `@ManyToOne`
+- `@OneToMany`
+
+---
+
+## Datos semilla
+
+No se utiliza **Flyway** ni **Liquibase** en esta versión.
+
+Cada microservicio incluye un archivo `data.sql` con información inicial.
+
+Configuración utilizada:
+
+```properties
+spring.jpa.defer-datasource-initialization=true
+spring.sql.init.mode=always
+spring.sql.init.continue-on-error=true
+```
+
+Los inserts utilizan:
+
+```sql
+INSERT IGNORE
+```
+
+Esto evita duplicación de registros al reiniciar los servicios.
+
+---
+
+# Bases de Datos
+
+MySQL debe estar disponible en:
+
+```plaintext
+localhost:3307
+```
+
+Configuración:
+
+| Parámetro | Valor |
+|------------|-------|
+| Usuario | root |
+| Password | vacío |
+
+## Bases configuradas
+
+- `db_authms`
+- `db_productosms`
+- `db_clientesms`
+- `db_ventasms`
+- `db_comprasms`
+- `db_proveedoresms`
+- `db_despachosms`
+- `db_vendedoresms`
+- `db_inventarioms`
+- `db_devolucionesms`
+
+---
+
+# Ejecución
+
+## Orden de inicio
+
+1. Levantar MySQL en puerto **3307**
+2. Ejecutar `eureka-server`
+3. Ejecutar `api-gateway`
+4. Ejecutar `auth-ms`
+5. Ejecutar el resto de microservicios
+
+## Comando de ejecución
+
+Desde la carpeta de cada servicio:
+
+```powershell
+.\mvnw.cmd spring-boot:run
+```
+
+---
+
+# Seguridad
+
+## Endpoints públicos
+
+### Registro
+
+```http
+POST http://localhost:8080/api/auth/register
+```
+
+### Login
+
 ```http
 POST http://localhost:8080/api/auth/login
-Content-Type: application/json
+```
 
+---
+
+## Endpoints protegidos
+
+Todos los demás endpoints requieren JWT:
+
+```http
+Authorization: Bearer <token>
+```
+
+---
+
+## Usuario de prueba
+
+```json
 {
-    "username": "usuario_demo",
-    "password": "passwordSeguro1"
+  "username": "demo",
+  "password": "password"
 }
+```
+
+---
+
+# Datos Semilla
+
+| Dato | Valor |
+|------|------|
+| Usuario | `demo / password` |
+| Cliente principal | `ID 1` — `12.345.678-9` |
+| Productos | `GRF-COC-001`, `GRF-BAN-002` |
+| Inventario | Stock inicial para ambos SKU |
+| Venta | `BOL-2026-0001` |
+| Compra | `FAC-2026-0001` |
+| Despacho | `TRK-2026-0001` |
+| Devolución | `NCG-2026-0001` |
+
+---
+
+# Comunicación entre Microservicios
+
+Comunicación síncrona mediante **OpenFeign**.
+
+## Relaciones
+
+### ventas-ms
+
+- valida clientes usando `clientes-ms`
+- descuenta stock usando `inventario-ms`
+
+### compras-ms
+
+- aumenta stock mediante `inventario-ms`
+
+### inventario-ms
+
+- valida existencia de SKU usando `productos-ms`
+
+### devoluciones-ms
+
+- valida venta original usando `ventas-ms`
+- puede reingresar stock usando `inventario-ms`
+
+---
+
+# Endpoints Principales
+
+| Servicio | Endpoints                                                                                                    |
+|----------|--------------------------------------------------------------------------------------------------------------|
+| `auth-ms` | `POST /api/auth/register` — `POST /api/auth/login`                                                           |
+| `productos-ms` | `GET/POST /api/productos` • `GET/PUT/DELETE /api/productos/{id}` • `GET /api/productos/sku/{sku}`            |
+| `clientes-ms` | `GET/POST /api/clientes` • `GET/PUT/DELETE /api/clientes/{id}` • `GET /api/clientes/rut/{rut}`               |
+| `ventas-ms` | `GET/POST /api/ventas` • `GET/DELETE /api/ventas/{id}`                                                       |
+| `compras-ms` | `GET/POST /api/compras` • `GET/DELETE /api/compras/{id}`                                                     |
+| `proveedores-ms` | `GET/POST /api/proveedores` • `GET/PUT/DELETE /api/proveedores/{id}` • `GET /api/proveedores/rut/{rut}`      |
+| `despachos-ms` | `GET/POST /api/despachos` • `GET/DELETE /api/despachos/{id}` • `PUT /api/despachos/{id}/estado`              |
+| `vendedores-ms` | `GET/POST /api/vendedores` • `GET/PUT/DELETE /api/vendedores/{id}` • `PUT /api/vendedores/{id}/comision`     |
+| `inventario-ms` | `GET/POST /api/inventario` • `GET/PUT/DELETE /api/inventario/{sku}` • `PUT /agregar` • `PUT /retirar`        |
+| `devoluciones-ms` | `GET/POST /api/devoluciones` • `GET/DELETE /api/devoluciones/{id}` • `GET /api/devoluciones/venta/{ventaId}` |
+
+---
+
+# Patrón Arquitectónico
+
+Este proyecto implementa:
+
+- Microservices Architecture
+- API Gateway Pattern
+- Service Discovery Pattern
+- Database per Service Pattern
+- JWT Authentication
+- Synchronous Inter-Service Communication (OpenFeign)

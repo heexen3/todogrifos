@@ -66,7 +66,7 @@ public class CompraServiceImpl implements CompraService {
                 cuerpoRequest.put("cantidadModificada", detalleDto.getCantidad());
 
                 // Llama al microservicio vecino para aumentar el inventario físico en bodega
-                inventarioClient.ingresarStock(detalleDto.getSku(), cuerpoRequest);
+                inventarioClient.agregarStock(detalleDto.getSku(), cuerpoRequest);
 
             } catch (FeignException.NotFound e) {
                 log.warn("Fallo de reabastecimiento distribuido: El SKU {} no existe en la base de datos de bodega.", detalleDto.getSku());
