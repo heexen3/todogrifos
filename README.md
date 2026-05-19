@@ -20,7 +20,7 @@ El sistema cubre:
 
 ---
 
-## Integrante
+## Integrantes
 
 - **Luis Echevarria**
 - **Claudio Bertin**
