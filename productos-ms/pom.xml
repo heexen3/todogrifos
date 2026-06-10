@@ -4,14 +4,23 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>com.luisechevarria</groupId>
-		<artifactId>todogrifos</artifactId>
+		<artifactId>todogrifos-platform</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
+	<groupId>com.todogrifos</groupId>
 	<artifactId>productos-ms</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<name>productos-ms</name>
+	<description>Microservicio de gestión de productos</description>
 
 	<dependencies>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -43,6 +52,7 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
 	</dependencies>
 
 	<build>

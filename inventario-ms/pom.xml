@@ -4,32 +4,15 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>com.luisechevarria</groupId>
-		<artifactId>todogrifos</artifactId>
+		<artifactId>todogrifos-platform</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
-		<relativePath>../pom.xml</relativePath> <!-- lookup parent from repository -->
+		<relativePath>../pom.xml</relativePath>
 	</parent>
 	<groupId>com.todogrifos</groupId>
 	<artifactId>inventario-ms</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name/>
-	<description/>
-	<url/>
-	<licenses>
-		<license/>
-	</licenses>
-	<developers>
-		<developer/>
-	</developers>
-	<scm>
-		<connection/>
-		<developerConnection/>
-		<tag/>
-		<url/>
-	</scm>
-	<properties>
-		<java.version>21</java.version>
-		<spring-cloud.version>2025.0.2</spring-cloud.version>
-	</properties>
+	<name>inventario-ms</name>
+	<description>Microservicio de gestión de inventario</description>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

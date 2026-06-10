@@ -5,7 +5,7 @@
 
 	<parent>
 		<groupId>com.luisechevarria</groupId>
-		<artifactId>todogrifos</artifactId>
+		<artifactId>todogrifos-platform</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
@@ -14,6 +14,7 @@
 	<artifactId>devoluciones-ms</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>devoluciones-ms</name>
+	<description>Microservicio de gestión de devoluciones</description>
 
 	<dependencies>
 		<dependency>
@@ -55,4 +56,5 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+
 </project>

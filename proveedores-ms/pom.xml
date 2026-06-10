@@ -5,12 +5,15 @@
 
 	<parent>
 		<groupId>com.luisechevarria</groupId>
-		<artifactId>todogrifos</artifactId>
+		<artifactId>todogrifos-platform</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
+	<groupId>com.todogrifos</groupId>
 	<artifactId>proveedores-ms</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<name>proveedores-ms</name>
+	<description>Microservicio de gestión de proveedores</description>
 
 
 	<dependencies>
