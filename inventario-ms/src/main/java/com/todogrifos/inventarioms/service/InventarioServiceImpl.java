@@ -35,7 +35,8 @@ public class InventarioServiceImpl implements InventarioService {
         ProductoDTO productoRemoto = productoClient.getProductoBySku(dto.getSku());
 
         if (productoRemoto == null) {
-            throw new InventarioNotFoundException("El producto con SKU " + dto.getSku() + " no existe en el catálogo maestro.");
+            throw new InventarioNotFoundException(
+                    "El producto con SKU " + dto.getSku() + " no existe en el catálogo maestro.");
         }
 
         // 2. Validaciones locales en la base de datos de inventario
@@ -99,7 +100,8 @@ public class InventarioServiceImpl implements InventarioService {
         int nuevaCantidad = inventario.getCantidad() - dto.getCantidadModificada();
 
         if (nuevaCantidad < 0) {
-            throw new InsufficientStockException("Stock insuficiente para realizar el retiro. Stock actual: " + inventario.getCantidad());
+            throw new InsufficientStockException(
+                    "Stock insuficiente para realizar el retiro. Stock actual: " + inventario.getCantidad());
         }
 
         inventario.setCantidad(nuevaCantidad);
@@ -111,14 +113,16 @@ public class InventarioServiceImpl implements InventarioService {
     @Override
     public boolean validarDisponibilidad(String sku, Integer cantidad) { // <- Implementado según interfaz
         Inventario inventario = inventarioRepository.findBySku(sku)
-                .orElseThrow(() -> new InventarioNotFoundException("No se encontró registro de inventario para el SKU: " + sku));
+                .orElseThrow(() -> new InventarioNotFoundException(
+                        "No se encontró registro de inventario para el SKU: " + sku));
 
         if (cantidad <= 0) {
             throw new InvalidStockQuantityException("La cantidad solicitada para validar debe ser mayor a cero.");
         }
 
         if (inventario.getCantidad() < cantidad) {
-            throw new InsufficientStockException("Stock insuficiente para el SKU: " + sku + ". Disponible: " + inventario.getCantidad());
+            throw new InsufficientStockException(
+                    "Stock insuficiente para el SKU: " + sku + ". Disponible: " + inventario.getCantidad());
         }
 
         return true;

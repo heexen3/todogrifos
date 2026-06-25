@@ -1,4 +1,4 @@
-package com.todogrifos.despachosms.service.impl;
+package com.todogrifos.despachosms.service;
 
 import com.todogrifos.despachosms.dto.DespachoCreateDTO;
 import com.todogrifos.despachosms.dto.DespachoResponseDTO;
@@ -34,16 +34,20 @@ public class DespachoServiceImpl implements DespachoService {
         // Validar unicidad del código de seguimiento
         if (despachoRepository.existsByCodigoSeguimiento(dto.getCodigoSeguimiento())) {
             log.warn("Rechazo de operación: El código de seguimiento '{}' ya existe.", dto.getCodigoSeguimiento());
-            throw new DespachoDuplicadoException("El código de seguimiento '" + dto.getCodigoSeguimiento() + "' ya está asignado a otra entrega.");
+            throw new DespachoDuplicadoException(
+                    "El código de seguimiento '" + dto.getCodigoSeguimiento() + "' ya está asignado a otra entrega.");
         }
 
         // Validar que la venta no posea un despacho previo asignado
         if (despachoRepository.existsByVentaId(dto.getVentaId())) {
-            log.warn("Rechazo de operación: La Venta ID {} ya cuenta con una orden logística activa.", dto.getVentaId());
-            throw new DespachoDuplicadoException("La venta con ID " + dto.getVentaId() + " ya tiene un despacho registrado.");
+            log.warn("Rechazo de operación: La Venta ID {} ya cuenta con una orden logística activa.",
+                    dto.getVentaId());
+            throw new DespachoDuplicadoException(
+                    "La venta con ID " + dto.getVentaId() + " ya tiene un despacho registrado.");
         }
 
-        // calcular la fecha estimada de entrega (lógica comercial: FechaActual + 3 días)
+        // calcular la fecha estimada de entrega (lógica comercial: FechaActual + 3
+        // días)
         LocalDateTime entregaEstimada = LocalDateTime.now().plusDays(3);
 
         Despacho despacho = Despacho.builder()
@@ -65,7 +69,8 @@ public class DespachoServiceImpl implements DespachoService {
     @Override
     @Transactional
     public DespachoResponseDTO actualizarEstado(Long id, DespachoStatusUpdateDTO dto) {
-        log.info("Solicitud de actualización de tránsito para el Despacho ID: {}. Nuevo Estado: {}", id, dto.getEstado());
+        log.info("Solicitud de actualización de tránsito para el Despacho ID: {}. Nuevo Estado: {}", id,
+                dto.getEstado());
 
         Despacho despacho = despachoRepository.findById(id)
                 .orElseThrow(() -> {
@@ -82,7 +87,8 @@ public class DespachoServiceImpl implements DespachoService {
 
         despacho.setEstado(nuevoEstado);
 
-        // Si ya fue entregado en terreno, actualizamos la fecha real de cierre al momento actual
+        // Si ya fue entregado en terreno, actualizamos la fecha real de cierre al
+        // momento actual
         if (nuevoEstado == EstadoDespacho.ENTREGADO) {
             despacho.setFechaEntregaEstimada(LocalDateTime.now());
             log.info("Despacho ID {} marcado como finalizado. Entrega efectuada.", despacho.getId());
@@ -108,7 +114,8 @@ public class DespachoServiceImpl implements DespachoService {
         Despacho despacho = despachoRepository.findByCodigoSeguimiento(codigoSeguimiento)
                 .orElseThrow(() -> {
                     log.warn("Rastreo fallido: Tracking '{}' inexistente.", codigoSeguimiento);
-                    return new DespachoNotFoundException("No se registra ningún envío con el código de seguimiento: " + codigoSeguimiento);
+                    return new DespachoNotFoundException(
+                            "No se registra ningún envío con el código de seguimiento: " + codigoSeguimiento);
                 });
         return mapToResponseDTO(despacho);
     }
