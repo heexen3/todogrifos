@@ -4,6 +4,10 @@ import com.todogrifos.vendedoresms.dto.VendedorCreateDTO;
 import com.todogrifos.vendedoresms.dto.VendedorResponseDTO;
 import com.todogrifos.vendedoresms.dto.ComisionUpdateDTO;
 import com.todogrifos.vendedoresms.service.VendedorService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +20,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping("/api/vendedores")
+@Tag(name = "Vendedores", description = "CRUD de vendedores, gestión de nómina y acumulación de comisiones por ventas")
 public class VendedorController {
 
     @Autowired
@@ -26,6 +31,16 @@ public class VendedorController {
      * POST http://localhost:8088/api/vendedores
      */
     @PostMapping
+    @Operation(
+            summary = "Crear vendedor",
+            description = "Permite registrar un nuevo vendedor en el sistema con sus datos personales y comerciales."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Vendedor creado exitosamente"),
+            @ApiResponse(responseCode = "400", description = "Datos inválidos o incompletos"),
+            @ApiResponse(responseCode = "409", description = "Conflicto: vendedor ya existente"),
+            @ApiResponse(responseCode = "500", description = "Error interno al crear vendedor")
+    })
     public ResponseEntity<VendedorResponseDTO> crearVendedor(@Valid @RequestBody VendedorCreateDTO dto) {
         log.info("Petición HTTP recibida: POST /api/vendedores para dar de alta a: {}", dto.getNombre());
 
@@ -39,6 +54,16 @@ public class VendedorController {
      * PUT http://localhost:8088/api/vendedores/{id}/comision
      */
     @PutMapping("/{id}/comision")
+    @Operation(
+            summary = "Actualizar comisión del vendedor",
+            description = "Permite acumular o actualizar la comisión de un vendedor en base a una venta realizada."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Comisión actualizada correctamente"),
+            @ApiResponse(responseCode = "400", description = "Datos inválidos o monto de comisión no válido"),
+            @ApiResponse(responseCode = "404", description = "Vendedor no encontrado"),
+            @ApiResponse(responseCode = "500", description = "Error interno al actualizar comisión")
+    })
     public ResponseEntity<VendedorResponseDTO> acumularComision(
             @PathVariable("id") Long id,
             @Valid @RequestBody ComisionUpdateDTO dto) {
@@ -54,6 +79,14 @@ public class VendedorController {
      * GET http://localhost:8088/api/vendedores
      */
     @GetMapping
+    @Operation(
+            summary = "Listar vendedores",
+            description = "Retorna la nómina completa de vendedores registrados en el sistema."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Listado de vendedores obtenido correctamente"),
+            @ApiResponse(responseCode = "500", description = "Error interno al recuperar vendedores")
+    })
     public ResponseEntity<List<VendedorResponseDTO>> obtenerTodos() {
         log.info("Petición HTTP recibida: GET /api/vendedores para listar nómina de personal.");
 
@@ -67,6 +100,15 @@ public class VendedorController {
      * GET http://localhost:8088/api/vendedores/{id}
      */
     @GetMapping("/{id}")
+    @Operation(
+            summary = "Obtener vendedor por ID",
+            description = "Permite consultar la información de un vendedor utilizando su identificador único."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Vendedor encontrado correctamente"),
+            @ApiResponse(responseCode = "404", description = "Vendedor no encontrado"),
+            @ApiResponse(responseCode = "500", description = "Error interno al consultar vendedor")
+    })
     public ResponseEntity<VendedorResponseDTO> obtenerPorId(@PathVariable("id") Long id) {
         log.info("Petición HTTP recibida: GET /api/vendedores/{} para búsqueda por ID.", id);
 
@@ -80,6 +122,15 @@ public class VendedorController {
      * GET http://localhost:8088/api/vendedores/codigo/{codigo}
      */
     @GetMapping("/codigo/{codigo}")
+    @Operation(
+            summary = "Obtener vendedor por código",
+            description = "Permite consultar un vendedor utilizando su código interno institucional."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Vendedor encontrado correctamente"),
+            @ApiResponse(responseCode = "404", description = "No existe un vendedor con el código indicado"),
+            @ApiResponse(responseCode = "500", description = "Error interno al consultar vendedor")
+    })
     public ResponseEntity<VendedorResponseDTO> obtenerPorCodigo(@PathVariable("codigo") String codigo) {
         log.info("Petición HTTP recibida: GET /api/vendedores/codigo/{} para búsqueda institucional.", codigo);
 

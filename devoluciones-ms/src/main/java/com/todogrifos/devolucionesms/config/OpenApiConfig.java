@@ -1,4 +1,4 @@
-package com.todogrifos.clientesms.config;
+package com.todogrifos.devolucionesms.config;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
@@ -13,18 +13,18 @@ import java.util.List;
 public class OpenApiConfig {
 
     @Bean
-    public OpenAPI clientesOpenAPI() {
+    public OpenAPI devolucionesOpenAPI() {
         return new OpenAPI()
                 .info(new Info()
-                        .title("clientes-ms API")
+                        .title("devoluciones-ms API")
                         .version("1.0")
-                        .description("Microservicio CRUD de clientes del sistema Todogrifos")
+                        .description("Microservicio de gestión de notas de crédito, devoluciones y reingreso o merma de inventario")
                         .contact(new Contact()
                                 .name("Equipo Backend Todogrifos")))
                 .servers(List.of(
                         new Server()
-                                .url("http://localhost:8083")
-                                .description("Microservicio Clientes (local)"),
+                                .url("http://localhost:8091")
+                                .description("Microservicio Devoluciones (local)"),
                         new Server()
                                 .url("http://localhost:8080")
                                 .description("API Gateway (entrada única con JWT)")

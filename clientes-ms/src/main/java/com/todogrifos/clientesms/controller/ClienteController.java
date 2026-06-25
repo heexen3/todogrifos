@@ -22,7 +22,7 @@ import java.util.List;
 @RequestMapping("/api/clientes")
 @Tag(name = "Clientes", description = "Controlador para el registro y consulta de clientes")
 public class ClienteController {
-    //hola
+
     @Autowired
     private ClienteService clienteService;
 

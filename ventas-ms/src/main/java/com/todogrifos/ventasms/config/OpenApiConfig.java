@@ -1,11 +1,11 @@
-package com.todogrifos.clientesms.config;
+package com.todogrifos.ventasms.config;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.servers.Server;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Bean;
 
 import java.util.List;
 
@@ -13,18 +13,18 @@ import java.util.List;
 public class OpenApiConfig {
 
     @Bean
-    public OpenAPI clientesOpenAPI() {
+    public OpenAPI ventasOpenAPI() {
         return new OpenAPI()
                 .info(new Info()
-                        .title("clientes-ms API")
+                        .title("ventas-ms API")
                         .version("1.0")
-                        .description("Microservicio CRUD de clientes del sistema Todogrifos")
+                        .description("Microservicio de registro de ventas, emisión de boletas y descuento automático de stock")
                         .contact(new Contact()
                                 .name("Equipo Backend Todogrifos")))
                 .servers(List.of(
                         new Server()
-                                .url("http://localhost:8083")
-                                .description("Microservicio Clientes (local)"),
+                                .url("http://localhost:8084")
+                                .description("Microservicio Ventas (local)"),
                         new Server()
                                 .url("http://localhost:8080")
                                 .description("API Gateway (entrada única con JWT)")
