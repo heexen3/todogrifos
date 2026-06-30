@@ -11,7 +11,7 @@ services:
     networks:
       - todogrifos-net
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -210,6 +210,21 @@ services:
         condition: service_healthy
       eureka-server:
         condition: service_started
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: todogrifos-phpmyadmin
+    environment:
+      PMA_HOST: mysql-db
+      PMA_PORT: 3306
+      PMA_USER: root
+    ports:
+      - "9000:80"
+    networks:
+      - todogrifos-net
+    depends_on:
+      mysql-db:
+        condition: service_healthy
 
   # ─────────────────────────────────────────────────────
   # Frontend — Panel de Gestión TodoGrifos (nginx estático)

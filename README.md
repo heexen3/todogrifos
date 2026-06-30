@@ -280,8 +280,7 @@ Content-Type: application/json
 {
   "username": "admin",
   "password": "password123",
-  "email": "admin@todogrifos.cl",
-  "rol": "ADMIN"
+  "role": "ROLE_ADMIN"
 }
 ```
 
@@ -452,7 +451,7 @@ Toda la lógica de scripts y utilidades locales está descrita en:
 | OpenAPI / Swagger UI local | **Implementado** |
 | Cobertura de Pruebas Unitarias (JUnit 5) | **Implementado** |
 | Orquestación con Docker Compose | **Implementado** |
-| Frontend de usuario (Thymeleaf/SPA) | *Pendiente* |
+| Frontend de usuario (SPA HTML/JS/CSS) | **Implementado** |
 
 ---
 
