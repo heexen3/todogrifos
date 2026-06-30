@@ -151,14 +151,12 @@ const loaders = {
     const data = await apiFetch('/api/clientes');
     const rows = Array.isArray(data) ? data : data.content ?? [];
     renderTable('table-clientes', [
-      { key: 'id',        label: 'ID' },
-      { key: 'nombres',   label: 'Nombres',       render: r => r.nombres ?? '—' },
-      { key: 'appaterno', label: 'Ap. Paterno',   render: r => r.appaterno ?? r.ap_paterno ?? '—' },
-      { key: 'apmaterno', label: 'Ap. Materno',   render: r => r.apmaterno ?? r.ap_materno ?? '—' },
-      { key: 'rut',       label: 'RUT' },
-      { key: 'email',     label: 'Email' },
-      { key: 'telefono',  label: 'Teléfono',      render: r => r.telefono ?? '—' },
-      { key: 'direccion', label: 'Dirección',     render: r => r.direccion ?? '—' },
+      { key: 'id',             label: 'ID' },
+      { key: 'nombreCompleto', label: 'Nombre Completo', render: r => r.nombreCompleto ?? '—' },
+      { key: 'rut',            label: 'RUT' },
+      { key: 'email',          label: 'Email' },
+      { key: 'telefono',       label: 'Teléfono',        render: r => r.telefono ?? '—' },
+      { key: 'direccion',      label: 'Dirección',       render: r => r.direccion ?? '—' },
     ], rows, 'No hay clientes registrados aún.');
   },
 
