@@ -1,3 +1,14 @@
+## 📦 COMPONENTES DE DISTRIBUCIÓN Y DEFENSA TÉCNICA
+
+Utilice los siguientes enlaces externos para descargar las versiones listas para producción y visualizar la defensa del proyecto:
+
+
+| **📦 Versión Sin Docker** <br>*(Arranque Nativo)* | Archivo `.zip` que contiene la carpeta `apps/` con los `.jar` compilados y el script `arrancar-nativo.bat` ordenado por fases. | [Descargar ZIP Nativo aquí]() |
+
+| **🐳 Versión Con Docker** <br>*(Avance Examen Transversal)* | Archivo `.zip` que contiene la carpeta `apps/` con los `.jar`, el archivo `docker-compose.yml` y el script automatizado `arrancar-sistema.bat`. | [Descargar ZIP Docker aquí]() |
+
+| **🎥 Video de Defensa Técnica** <br>*(Evaluación Individual)* | Enlace directo al video explicativo donde se evidencia el funcionamiento, testing y el aporte técnico individual. **Duración ideal: 15 minutos (Máximo permitido: 18 minutos).** | [Ver Video Explicativo aquí]() |
+
 # TodoGrifos - Sistema de Microservicios
 
 TodoGrifos es una plataforma multi-módulo para la gestión integral de una tienda de **grifería y ferretería**. Permite administrar la autenticación de usuarios, catálogo de productos, clientes, ventas, compras, inventario, proveedores, despachos, comisiones de vendedores y devoluciones (notas de crédito) a través de una arquitectura de microservicios desarrollada con Spring Boot y Spring Cloud.
@@ -304,10 +315,12 @@ Content-Type: application/json
 
 {
   "rut": "12.345.678-9",
-  "nombre": "Distribuidora San Joaquín",
-  "email": "contacto@sanjoaquin.cl",
-  "telefono": "+56987654321",
-  "direccion": "Av. Vicuña Mackenna 4500"
+  "nombres": "Profesor Mauricio",
+  "appaterno": "Full",
+  "apmaterno": "Stack",
+  "email": "contacto@profesor.cl",
+  "telefono": "+56977354321",
+  "direccion": "Calle Real de Santiago 123, Comuna Verdadera"
 }
 ```
 
@@ -318,12 +331,12 @@ Authorization: Bearer <TOKEN>
 Content-Type: application/json
 
 {
-  "sku": "GRF-COC-001",
-  "nombre": "Grifo de Cocina Monomando Cromado",
-  "descripcion": "Grifo monomando extensible con acabado brillante",
-  "precio": 45990,
-  "categoriaId": 1,
-  "marcaId": 1
+  "sku": "VAL-PAS-003",
+  "nombre": "Válvula de Compuerta 1 Pulgada",
+  "precio": 16990,
+  "garantiaMeses": 12,
+  "marcaId": 2,
+  "categoriaId": 3
 }
 ```
 
@@ -334,10 +347,9 @@ Authorization: Bearer <TOKEN>
 Content-Type: application/json
 
 {
-  "sku": "GRF-COC-001",
-  "stock": 100,
-  "stockMinimo": 10,
-  "ubicacion": "Bodega Principal Pasillo A"
+  "sku": "VAL-PAS-003",
+  "cantidad": 75,
+  "stockMinimo": 8
 }
 ```
 
@@ -348,14 +360,11 @@ Authorization: Bearer <TOKEN>
 Content-Type: application/json
 
 {
-  "folio": "BOL-2026-0001",
+  "folio": "BOL-2026-0099",
   "clienteId": 1,
+  "vendedorId": 1,
   "detalles": [
-    {
-      "sku": "GRF-COC-001",
-      "cantidad": 5,
-      "precioUnitario": 45990
-    }
+    { "sku": "VAL-PAS-003", "cantidad": 3, "precioUnitario": 16990 }
   ]
 }
 ```

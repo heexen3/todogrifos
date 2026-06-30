@@ -67,6 +67,7 @@ class VentaControllerTest {
         VentaCreateDTO request = VentaCreateDTO.builder()
                 .folio("BOL-100200")
                 .clienteId(5L)
+                .vendedorId(2L)
                 .detalles(List.of(detalle))
                 .build();
 
