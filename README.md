@@ -454,9 +454,3 @@ Toda la lógica de scripts y utilidades locales está descrita en:
 | Orquestación con Docker Compose | **Implementado** |
 | Frontend de usuario (Thymeleaf/SPA) | *Pendiente* |
 
----
-
-# 22. Próximas mejoras sugeridas
-
-* Implementación de una interfaz gráfica (Frontend) utilizando React o Thymeleaf.
-* Configuración de un servidor de configuración distribuida (Spring Cloud Config).
