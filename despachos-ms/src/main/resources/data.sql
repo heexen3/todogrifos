@@ -1,0 +1,1 @@
+INSERT IGNORE INTO despachos (id, codigo_seguimiento, venta_id, direccion_envio, comuna, estado, fecha_creacion, fecha_entrega_estimada) VALUES (1, 'TRK-2026-0001', 1, 'Av. Vicuña Mackenna 4500', 'Macul', 'PENDIENTE', NOW(), NOW());

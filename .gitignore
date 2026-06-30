@@ -31,3 +31,14 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### TodoGrifos Native Deploy and Artifacts ###
+**/target/
+*.jar
+*.bat
+*.sh
+todogrifos-deploy-nativo/
+todogrifos-deploy-docker/
+*.zip
+
+

@@ -1,0 +1,1 @@
+INSERT IGNORE INTO clientes (id, rut, nombres, ap_paterno, ap_materno, email, telefono, direccion) VALUES (1, '12.345.678-9', 'Distribuidora', 'San', 'Joaquín', 'contacto@sanjoaquin.cl', '+56987654321', 'Av. Vicuña Mackenna 4500');

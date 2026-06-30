@@ -1,0 +1,1 @@
+INSERT IGNORE INTO vendedores (id, codigo_interno, rut, nombre, sucursal, porcentaje_comision, comision_acumulada, fecha_ingreso) VALUES (1, 'VEND-001', '13.456.789-0', 'Juan Pérez', 'Santiago Centro', 5.0, 0.0, NOW());

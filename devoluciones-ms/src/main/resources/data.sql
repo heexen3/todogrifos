@@ -1,0 +1,1 @@
+INSERT IGNORE INTO devoluciones (id, nota_credito_folio, venta_id, sku, cantidad, motivo, destino_logistico, fecha_devolucion) VALUES (1, 'NCG-2026-0001', 1, 'GRF-COC-001', 2, 'Defecto de fábrica leve', 'REINGRESADO_A_STOCK', NOW());

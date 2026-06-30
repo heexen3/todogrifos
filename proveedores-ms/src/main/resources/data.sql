@@ -1,0 +1,1 @@
+INSERT IGNORE INTO proveedores (id, rut, razon_social, email, telefono, direccion, fecha_registro) VALUES (1, '76.123.456-K', 'Proveedor Grifos SpA', 'contacto@grifos.cl', '+56912345678', 'Av. Lo Espejo 100', NOW());
