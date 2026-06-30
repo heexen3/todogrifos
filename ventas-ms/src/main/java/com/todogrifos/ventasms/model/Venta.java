@@ -31,6 +31,10 @@ public class Venta {
     @Column(name = "cliente_id", nullable = false)
     private Long clienteId;
 
+    // Guardamos el ID del vendedor que realizó la venta (referencia lógica a vendedores-ms)
+    @Column(name = "vendedor_id", nullable = false)
+    private Long vendedorId;
+
     @Column(nullable = false)
     private Double total;
 

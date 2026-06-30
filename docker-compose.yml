@@ -211,6 +211,23 @@ services:
       eureka-server:
         condition: service_started
 
+  # ─────────────────────────────────────────────────────
+  # Frontend — Panel de Gestión TodoGrifos (nginx estático)
+  # Disponible en: http://localhost:3000
+  # ─────────────────────────────────────────────────────
+  frontend:
+    image: nginx:alpine
+    container_name: todogrifos-frontend
+    ports:
+      - "3000:80"
+    volumes:
+      - ./frontend:/usr/share/nginx/html:ro
+    networks:
+      - todogrifos-net
+    depends_on:
+      - api-gateway
+    restart: unless-stopped
+
 volumes:
   mysql-data:
 

@@ -23,6 +23,9 @@ public class VentaCreateDTO {
     @NotNull(message = "El ID del cliente es obligatorio.")
     private Long clienteId;
 
+    @NotNull(message = "El ID del vendedor es obligatorio.")
+    private Long vendedorId;
+
     @NotEmpty(message = "El detalle de la venta no puede estar vacío, debe incluir al menos un artículo.")
     @Valid
     private List<VentaDetalleCreateDTO> detalles;

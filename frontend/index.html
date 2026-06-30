@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TodoGrifos — Panel de Gestión</title>
+  <meta name="description" content="Sistema de gestión integral para la distribuidora de grifería y ferretería TodoGrifos. Administra clientes, productos, inventario, ventas, proveedores, despachos, vendedores y devoluciones."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+
+<!-- LOGIN SCREEN -->
+<div id="login-screen" class="screen active">
+  <div class="login-bg">
+    <div class="login-glow g1"></div>
+    <div class="login-glow g2"></div>
+  </div>
+  <div class="login-card">
+    <div class="brand">
+      <div class="brand-icon">🔧</div>
+      <h1 class="brand-name">TodoGrifos</h1>
+      <p class="brand-sub">Sistema de Gestión Integral</p>
+    </div>
+    <form id="login-form" onsubmit="handleLogin(event)">
+      <div class="form-group">
+        <label for="login-user">Usuario</label>
+        <input id="login-user" type="text" value="admin" placeholder="nombre de usuario" autocomplete="username"/>
+      </div>
+      <div class="form-group">
+        <label for="login-pass">Contraseña</label>
+        <input id="login-pass" type="password" value="admin123" placeholder="contraseña" autocomplete="current-password"/>
+      </div>
+      <div id="login-error" class="alert-error hidden"></div>
+      <button type="submit" id="login-btn" class="btn-primary">
+        <span id="login-label">Ingresar al Sistema</span>
+        <span id="login-spinner" class="spinner hidden"></span>
+      </button>
+    </form>
+    <p class="login-hint">API Gateway: <code>http://localhost:8080</code></p>
+  </div>
+</div>
+
+<!-- MAIN APP -->
+<div id="app-screen" class="screen">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-icon sm">🔧</div>
+      <span>TodoGrifos</span>
+    </div>
+    <nav class="sidebar-nav">
+      <button class="nav-item active" onclick="showSection('dashboard', this)" id="nav-dashboard">
+        <span class="nav-icon">📊</span><span>Dashboard</span>
+      </button>
+      <button class="nav-item" onclick="showSection('clientes', this)" id="nav-clientes">
+        <span class="nav-icon">👥</span><span>Clientes</span>
+      </button>
+      <button class="nav-item" onclick="showSection('productos', this)" id="nav-productos">
+        <span class="nav-icon">📦</span><span>Productos</span>
+      </button>
+      <button class="nav-item" onclick="showSection('inventario', this)" id="nav-inventario">
+        <span class="nav-icon">🏪</span><span>Inventario</span>
+      </button>
+      <button class="nav-item" onclick="showSection('ventas', this)" id="nav-ventas">
+        <span class="nav-icon">🧾</span><span>Ventas</span>
+      </button>
+      <button class="nav-item" onclick="showSection('compras', this)" id="nav-compras">
+        <span class="nav-icon">🛒</span><span>Compras</span>
+      </button>
+      <button class="nav-item" onclick="showSection('proveedores', this)" id="nav-proveedores">
+        <span class="nav-icon">🏭</span><span>Proveedores</span>
+      </button>
+      <button class="nav-item" onclick="showSection('vendedores', this)" id="nav-vendedores">
+        <span class="nav-icon">🙋</span><span>Vendedores</span>
+      </button>
+      <button class="nav-item" onclick="showSection('despachos', this)" id="nav-despachos">
+        <span class="nav-icon">🚚</span><span>Despachos</span>
+      </button>
+      <button class="nav-item" onclick="showSection('devoluciones', this)" id="nav-devoluciones">
+        <span class="nav-icon">↩️</span><span>Devoluciones</span>
+      </button>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-badge">
+        <div class="user-avatar">A</div>
+        <div class="user-info">
+          <span id="user-name-display">demo</span>
+          <span class="user-role">ROLE_ADMIN</span>
+        </div>
+      </div>
+      <button class="btn-logout" onclick="logout()">Salir</button>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+    <header class="topbar">
+      <div class="topbar-title" id="topbar-title">Dashboard</div>
+      <div class="topbar-actions">
+        <div class="status-badge" id="api-status">
+          <span class="status-dot green"></span> API Conectada
+        </div>
+      </div>
+    </header>
+
+    <!-- DASHBOARD -->
+    <section id="section-dashboard" class="content-section active">
+      <div class="stat-grid" id="stat-grid">
+        <div class="stat-card" style="--accent:#6366f1">
+          <div class="stat-icon">👥</div>
+          <div class="stat-info">
+            <div class="stat-value" id="stat-clientes">—</div>
+            <div class="stat-label">Clientes</div>
+          </div>
+        </div>
+        <div class="stat-card" style="--accent:#22c55e">
+          <div class="stat-icon">📦</div>
+          <div class="stat-info">
+            <div class="stat-value" id="stat-productos">—</div>
+            <div class="stat-label">Productos</div>
+          </div>
+        </div>
+        <div class="stat-card" style="--accent:#f59e0b">
+          <div class="stat-icon">🧾</div>
+          <div class="stat-info">
+            <div class="stat-value" id="stat-ventas">—</div>
+            <div class="stat-label">Ventas</div>
+          </div>
+        </div>
+        <div class="stat-card" style="--accent:#ec4899">
+          <div class="stat-icon">🏪</div>
+          <div class="stat-info">
+            <div class="stat-value" id="stat-inventario">—</div>
+            <div class="stat-label">Ítems en Stock</div>
+          </div>
+        </div>
+        <div class="stat-card" style="--accent:#14b8a6">
+          <div class="stat-icon">🛒</div>
+          <div class="stat-info">
+            <div class="stat-value" id="stat-compras">—</div>
+            <div class="stat-label">Órdenes de Compra</div>
+          </div>
+        </div>
+        <div class="stat-card" style="--accent:#8b5cf6">
+          <div class="stat-icon">🏭</div>
+          <div class="stat-info">
+            <div class="stat-value" id="stat-proveedores">—</div>
+            <div class="stat-label">Proveedores</div>
+          </div>
+        </div>
+        <div class="stat-card" style="--accent:#06b6d4">
+          <div class="stat-icon">🚚</div>
+          <div class="stat-info">
+            <div class="stat-value" id="stat-despachos">—</div>
+            <div class="stat-label">Despachos</div>
+          </div>
+        </div>
+        <div class="stat-card" style="--accent:#f97316">
+          <div class="stat-icon">↩️</div>
+          <div class="stat-info">
+            <div class="stat-value" id="stat-devoluciones">—</div>
+            <div class="stat-label">Devoluciones</div>
+          </div>
+        </div>
+      </div>
+      <div class="arch-panel">
+        <h2 class="panel-title">Arquitectura del Ecosistema</h2>
+        <div class="arch-grid">
+          <div class="arch-node gateway">🌐 API Gateway<br/><small>:8080</small></div>
+          <div class="arch-arrow">→</div>
+          <div class="arch-services">
+            <div class="arch-node ms">🔑 auth-ms :8082</div>
+            <div class="arch-node ms">📦 productos-ms :8081</div>
+            <div class="arch-node ms">👥 clientes-ms :8083</div>
+            <div class="arch-node ms">🧾 ventas-ms :8084</div>
+            <div class="arch-node ms">🛒 compras-ms :8085</div>
+            <div class="arch-node ms">🏭 proveedores-ms :8086</div>
+            <div class="arch-node ms">🚚 despachos-ms :8087</div>
+            <div class="arch-node ms">🙋 vendedores-ms :8088</div>
+            <div class="arch-node ms">🏪 inventario-ms :8089</div>
+            <div class="arch-node ms">↩️ devoluciones-ms :8091</div>
+          </div>
+          <div class="arch-arrow">→</div>
+          <div class="arch-node db">🗄️ MySQL<br/><small>:3307</small></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GENERIC DATA SECTION (reused for all modules) -->
+    <section id="section-clientes" class="content-section">
+      <div class="section-header">
+        <h2 class="panel-title">Clientes</h2>
+        <button class="btn-refresh" onclick="loadSection('clientes')">↻ Actualizar</button>
+      </div>
+      <div id="table-clientes" class="table-wrapper"><div class="loading-msg">Cargando...</div></div>
+    </section>
+
+    <section id="section-productos" class="content-section">
+      <div class="section-header">
+        <h2 class="panel-title">Catálogo de Productos</h2>
+        <button class="btn-refresh" onclick="loadSection('productos')">↻ Actualizar</button>
+      </div>
+      <div id="table-productos" class="table-wrapper"><div class="loading-msg">Cargando...</div></div>
+    </section>
+
+    <section id="section-inventario" class="content-section">
+      <div class="section-header">
+        <h2 class="panel-title">Control de Inventario</h2>
+        <button class="btn-refresh" onclick="loadSection('inventario')">↻ Actualizar</button>
+      </div>
+      <div id="table-inventario" class="table-wrapper"><div class="loading-msg">Cargando...</div></div>
+    </section>
+
+    <section id="section-ventas" class="content-section">
+      <div class="section-header">
+        <h2 class="panel-title">Registro de Ventas</h2>
+        <button class="btn-refresh" onclick="loadSection('ventas')">↻ Actualizar</button>
+      </div>
+      <div id="table-ventas" class="table-wrapper"><div class="loading-msg">Cargando...</div></div>
+    </section>
+
+    <section id="section-compras" class="content-section">
+      <div class="section-header">
+        <h2 class="panel-title">Órdenes de Compra</h2>
+        <button class="btn-refresh" onclick="loadSection('compras')">↻ Actualizar</button>
+      </div>
+      <div id="table-compras" class="table-wrapper"><div class="loading-msg">Cargando...</div></div>
+    </section>
+
+    <section id="section-proveedores" class="content-section">
+      <div class="section-header">
+        <h2 class="panel-title">Proveedores y Distribuidores</h2>
+        <button class="btn-refresh" onclick="loadSection('proveedores')">↻ Actualizar</button>
+      </div>
+      <div id="table-proveedores" class="table-wrapper"><div class="loading-msg">Cargando...</div></div>
+    </section>
+
+    <section id="section-vendedores" class="content-section">
+      <div class="section-header">
+        <h2 class="panel-title">Equipo de Vendedores</h2>
+        <button class="btn-refresh" onclick="loadSection('vendedores')">↻ Actualizar</button>
+      </div>
+      <div id="table-vendedores" class="table-wrapper"><div class="loading-msg">Cargando...</div></div>
+    </section>
+
+    <section id="section-despachos" class="content-section">
+      <div class="section-header">
+        <h2 class="panel-title">Gestión de Despachos</h2>
+        <button class="btn-refresh" onclick="loadSection('despachos')">↻ Actualizar</button>
+      </div>
+      <div id="table-despachos" class="table-wrapper"><div class="loading-msg">Cargando...</div></div>
+    </section>
+
+    <section id="section-devoluciones" class="content-section">
+      <div class="section-header">
+        <h2 class="panel-title">Notas de Crédito y Devoluciones</h2>
+        <button class="btn-refresh" onclick="loadSection('devoluciones')">↻ Actualizar</button>
+      </div>
+      <div id="table-devoluciones" class="table-wrapper"><div class="loading-msg">Cargando...</div></div>
+    </section>
+
+  </main>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

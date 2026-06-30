@@ -64,6 +64,7 @@ public class VentaServiceImpl implements VentaService {
                 .folio(dto.getFolio())
                 .fechaVenta(LocalDateTime.now())
                 .clienteId(dto.getClienteId())
+                .vendedorId(dto.getVendedorId())
                 .total(0.0) // se calculará de forma dinámica sumando los subtotales
                 .build();
 
@@ -112,8 +113,8 @@ public class VentaServiceImpl implements VentaService {
 
         // persistir en cascada
         Venta ventaGuardada = ventaRepository.save(venta);
-        log.info("Venta procesada y boleta guardada con éxito. ID: {}, Folio: {}, Total: ${}",
-                ventaGuardada.getId(), ventaGuardada.getFolio(), ventaGuardada.getTotal());
+        log.info("Venta procesada y boleta guardada con éxito. ID: {}, Folio: {}, Vendedor: {}, Total: ${}",
+                ventaGuardada.getId(), ventaGuardada.getFolio(), ventaGuardada.getVendedorId(), ventaGuardada.getTotal());
 
         return mapToResponseDTO(ventaGuardada);
     }
@@ -142,6 +143,7 @@ public class VentaServiceImpl implements VentaService {
                 .folio(venta.getFolio())
                 .fechaVenta(venta.getFechaVenta())
                 .clienteId(venta.getClienteId())
+                .vendedorId(venta.getVendedorId())
                 .total(venta.getTotal())
                 .detalles(detallesDto)
                 .build();

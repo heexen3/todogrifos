@@ -15,6 +15,7 @@ public class VentaResponseDTO {
     private String folio;
     private LocalDateTime fechaVenta;
     private Long clienteId;
+    private Long vendedorId;
     private Double total;
     private List<VentaDetalleResponseDTO> detalles;
 }
